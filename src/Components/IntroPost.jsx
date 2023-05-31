@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 
-function IntroPost({post}) {
-    
+function IntroPost({post}) { 
+  const navigate=useNavigate();  
   return (
-    <div className='grid grid-cols-1
-     md:grid-cols-2 mt-10 px-10 md:px-15 lg:px-32 gap-8'>
+    <div className='grid grid-cols-1 cursor-pointer
+     md:grid-cols-2 mt-10 px-10 md:px-15 lg:px-32 gap-8'  
+     onClick={()=>navigate('blog-detail/'+post.id)}>
         <img src={post.coverImage} className='
         rounded-2xl object-cover w-full h-full'/>
         <div>

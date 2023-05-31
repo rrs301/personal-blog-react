@@ -8,6 +8,8 @@ import GlobalApi from '../Services/GlobalApi'
 
 function Home() {
     const [post,setPost]=useState([])
+    const [orgPost,setOrgPost]=useState([])
+
     useEffect(()=>{
         getPost();
     },[])
@@ -20,21 +22,30 @@ function Home() {
                 tag:item.attributes.tag,
                 coverImage:item.attributes.coverImage.data.attributes.url,
             }));
-            setPost(result)
+            setPost(result);
+            setOrgPost(result);
         })
     }
+
+    const filterPost=(tag)=>{
+      if(tag=='All')
+      {
+        setPost(orgPost);
+        return ;
+      }
+      const result=orgPost.filter(item=>item.tag==tag);
+      setPost(result);
+    }
   return (
-    <div className='p-[20px]'>
-       {/* Header */}
-        <Header/>
+    <div >
+      
        {/* Search */}
-        <Search/>
+        <Search selectedTag={(tag)=>filterPost(tag)} />
         {/* IntroPost */}
       {post.length>0? <IntroPost post={post[0]} />:null}
         {/* Blogs */}
       {post.length>0?  <Blogs posts={post}/>:null}
-        {/* Footer */}
-        <Footer/>
+      
     </div>
   )
 }
